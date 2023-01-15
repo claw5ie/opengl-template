@@ -1,7 +1,3 @@
-typedef GLuint gluint;
-typedef GLint glint;
-typedef GLenum glenum;
-
 void *
 xmalloc(size_t size)
 {

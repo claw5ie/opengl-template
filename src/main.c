@@ -17,11 +17,21 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "callbacks.c"
+typedef GLuint gluint;
+typedef GLint glint;
+typedef GLenum glenum;
+
 #include "utils.c"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
+void
+framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+  (void)window;
+  glViewport(0, 0, width, height);
+}
 
 int
 main(void)
