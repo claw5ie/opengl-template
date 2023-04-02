@@ -10,12 +10,26 @@
 #include <math.h>
 #include <assert.h>
 
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+typedef unsigned uint;
+typedef uint8_t u8;
+typedef int8_t i8;
+typedef uint16_t u16;
+typedef int16_t i16;
+typedef uint32_t u32;
+typedef int32_t i32;
+typedef uint64_t u64;
+typedef int64_t i64;
+
+typedef float float32;
+typedef double float64;
 
 typedef GLuint gluint;
 typedef GLint glint;

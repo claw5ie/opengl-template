@@ -1,54 +1,37 @@
-void *
-xmalloc(size_t size)
-{
-  void *data = malloc(size);
-
-  if (data == NULL)
-    {
-      fprintf(stderr, "ERROR: can't allocate %zu bytes.\n", size);
-      abort();
-    }
-
-  return data;
-}
-
 char *
 read_entire_file(const char *filepath, size_t *file_size_loc)
 {
   int fd = open(filepath, O_RDONLY);
   if (fd == -1)
-    {
-      fprintf(stderr, "ERROR: can't open file \'%s\'.\n", filepath);
-      abort();
-    }
+    goto report_error;
 
-  size_t file_size = 0;
+  size_t size = 0;
+  char *data = NULL;
 
   {
     struct stat stats;
     if (fstat(fd, &stats) == -1)
-      abort();
-
-    file_size = stats.st_size;
+      goto report_error;
+    size = stats.st_size;
   }
 
-  char *file_data = xmalloc(file_size + 1);
-  if (read(fd, file_data, file_size) != (ssize_t)file_size)
-    {
-      fprintf(stderr,
-              "ERROR: can't read %zu bytes from a file \'%s\'.\n",
-              file_size,
-              file_data);
-      abort();
-    }
-  file_data[file_size] = '\0';
+  data = malloc(size + 1);
+  if (data == NULL)
+    abort();
+  else if (read(fd, data, size) == -1)
+    goto report_error;
+  data[size] = '\0';
 
   close(fd);
 
   if (file_size_loc != NULL)
-    *file_size_loc = file_size;
+    *file_size_loc = size;
 
-  return file_data;
+  return data;
+
+ report_error:
+  perror(strerror(errno));
+  exit(EXIT_FAILURE);
 }
 
 gluint
@@ -84,7 +67,9 @@ create_shader(glenum shader_type, const char *filepath)
                 shader_type_as_string);
       else
         {
-          char *error_message = xmalloc(info_log_length + 1);
+          char *error_message = malloc(info_log_length + 1);
+          if (error_message == NULL)
+            abort();
           glGetShaderInfoLog(shader, info_log_length, NULL, error_message);
           error_message[info_log_length] = '\0';
           fprintf(stderr,
@@ -125,7 +110,9 @@ create_program(gluint vertex_shader, gluint fragment_shader)
               stderr);
       else
         {
-          char *error_message = xmalloc(info_log_length + 1);
+          char *error_message = malloc(info_log_length + 1);
+          if (error_message == NULL)
+            abort();
           glGetProgramInfoLog(program, info_log_length, NULL, error_message);
           error_message[info_log_length] = '\0';
           fprintf(stderr,
