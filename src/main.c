@@ -113,32 +113,32 @@ main(void)
     {
       switch (error)
         {
-        case 0x0500:
+        case GL_INVALID_ENUM:
           fputs("GL_INVALID_ENUM", stderr);
           break;
-        case 0x0501:
+        case GL_INVALID_VALUE:
           fputs("GL_INVALID_VALUE", stderr);
           break;
-        case 0x0502:
+        case GL_INVALID_OPERATION:
           fputs("GL_INVALID_OPERATION", stderr);
           break;
-        case 0x0503:
+        case GL_STACK_OVERFLOW:
           fputs("GL_STACK_OVERFLOW", stderr);
           break;
-        case 0x0504:
+        case GL_STACK_UNDERFLOW:
           fputs("GL_STACK_UNDERFLOW", stderr);
           break;
-        case 0x0505:
+        case GL_OUT_OF_MEMORY:
           fputs("GL_OUT_OF_MEMORY", stderr);
           break;
-        case 0x0506:
+        case GL_INVALID_FRAMEBUFFER_OPERATION:
           fputs("GL_INVALID_FRAMEBUFFER_OPERATION", stderr);
           break;
-        case 0x0507:
+        case GL_CONTEXT_LOST:
           fputs("GL_CONTEXT_LOST", stderr);
           break;
-        case 0x8031:
-          fputs("GL_TABLE_TOO_LARGE1", stderr);
+        case GL_TABLE_TOO_LARGE:
+          fputs("GL_TABLE_TOO_LARGE", stderr);
           break;
         }
       putchar('\n');
