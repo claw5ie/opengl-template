@@ -18,8 +18,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-typedef unsigned uint;
-
 typedef uint8_t  u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
@@ -30,12 +28,8 @@ typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
 
-typedef float f32;
+typedef float  f32;
 typedef double f64;
-
-typedef GLuint gluint;
-typedef GLint glint;
-typedef GLenum glenum;
 
 #include "utils.c"
 
@@ -80,12 +74,12 @@ main(void)
         1.0, 0.0,
         0.0, 1.0 };
 
-  gluint vertex_buffer;
+  GLuint vertex_buffer;
   glCreateBuffers(1, &vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
 
-  gluint vertex_array;
+  GLuint vertex_array;
   glCreateVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);
 
@@ -93,12 +87,12 @@ main(void)
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
   glEnableVertexAttribArray(0);
 
-  gluint program = 0;
+  GLuint program = 0;
 
   {
-    gluint vertex_shader
+    GLuint vertex_shader
       = create_shader(GL_VERTEX_SHADER, "./shaders/shader.vert");
-    gluint fragment_shader
+    GLuint fragment_shader
       = create_shader(GL_FRAGMENT_SHADER, "./shaders/shader.frag");
     program = create_program(vertex_shader, fragment_shader);
 
@@ -111,7 +105,7 @@ main(void)
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.8, 0.0, 0.4, 1.0);
 
-  for (glenum error; (error = glGetError()) != GL_NO_ERROR; )
+  for (GLenum error; (error = glGetError()) != GL_NO_ERROR; )
     {
       switch (error)
         {

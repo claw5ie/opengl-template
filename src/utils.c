@@ -34,29 +34,29 @@ read_entire_file(const char *filepath, size_t *file_size_loc)
   exit(EXIT_FAILURE);
 }
 
-gluint
-create_shader(glenum shader_type, const char *filepath)
+GLuint
+create_shader(GLenum shader_type, const char *filepath)
 {
   assert(shader_type == GL_VERTEX_SHADER
          || shader_type == GL_FRAGMENT_SHADER);
 
-  gluint shader = glCreateShader(shader_type);
+  GLuint shader = glCreateShader(shader_type);
 
   {
     size_t file_size = 0;
     char *file_data = read_entire_file(filepath, &file_size);
-    glint line_size = file_size;
+    GLint line_size = file_size;
     glShaderSource(shader, 1, (void *)&file_data, &line_size);
     free(file_data);
   }
 
-  glint status = 0;
+  GLint status = 0;
   glCompileShader(shader);
   glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
 
   if (status != GL_TRUE)
     {
-      glint info_log_length = 0;
+      GLint info_log_length = 0;
       glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &info_log_length);
 
       const char *shader_type_as_string
@@ -86,10 +86,10 @@ create_shader(glenum shader_type, const char *filepath)
   return shader;
 }
 
-gluint
-create_program(gluint vertex_shader, gluint fragment_shader)
+GLuint
+create_program(GLuint vertex_shader, GLuint fragment_shader)
 {
-  gluint program = glCreateProgram();
+  GLuint program = glCreateProgram();
 
   glAttachShader(program, vertex_shader);
   glAttachShader(program, fragment_shader);
@@ -97,12 +97,12 @@ create_program(gluint vertex_shader, gluint fragment_shader)
   glDetachShader(program, vertex_shader);
   glDetachShader(program, fragment_shader);
 
-  glint status = 0;
+  GLint status = 0;
   glGetProgramiv(program, GL_LINK_STATUS, &status);
 
   if (status != GL_TRUE)
     {
-      glint info_log_length = 0;
+      GLint info_log_length = 0;
       glGetProgramiv(program, GL_INFO_LOG_LENGTH, &info_log_length);
 
       if (info_log_length <= 0)
